@@ -16,7 +16,7 @@ gcloud compute --project=rasi-ohare firewall-rules create kong-admin-api --direc
 
 Insumos / Supply DB:
 
-gcloud compute instances create supply-db --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=postgres-db --create-disk=auto-delete=yes,boot=yes,device-name=mongo-db-instance,image=projects/cos-cloud/global/images/cos-101-17162-40-13,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+gcloud compute instances create supply-db --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=postgres-db --create-disk=auto-delete=yes,boot=yes,device-name=supply-db,image=projects/cos-cloud/global/images/cos-101-17162-40-20,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
     # Inside the SHH of the instance:
 
@@ -26,13 +26,13 @@ docker ps -a
 
     # ~ #
 
-Historia clinica / Medical History DB:
+Formula medica / formula DB:
 
-gcloud compute instances create medicalhistory-db --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=postgres-db --create-disk=auto-delete=yes,boot=yes,device-name=mongo-db-instance,image=projects/cos-cloud/global/images/cos-101-17162-40-13,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+gcloud compute instances create formula-db --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=postgres-db --create-disk=auto-delete=yes,boot=yes,device-name=formula-db,image=projects/cos-cloud/global/images/cos-101-17162-40-20,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
     # Inside the SHH of the instance:
 
->>> docker run --restart=always -d -e POSTGRES_USER=medicalhistory_user -e POSTGRES_DB=medicalhistory_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name medicalhistory-db postgres
+>>> docker run --restart=always -d -e POSTGRES_USER=formula_user -e POSTGRES_DB=formula_db -e POSTGRES_PASSWORD=isis2503 -p 5432:5432 --name formula-db postgres
 
 >>> docker ps -a
 
@@ -40,7 +40,7 @@ gcloud compute instances create medicalhistory-db --project=rasi-ohare --zone=us
 
                                                          ~ ~ API Gateway Kong Creation ~ ~ 
 
-gcloud compute instances create kong-instance --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=kong-instance --create-disk=auto-delete=yes,boot=yes,device-name=mongo-db-instance,image=projects/cos-cloud/global/images/cos-101-17162-40-13,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+gcloud compute instances create kong-instance --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=kong-instance --create-disk=auto-delete=yes,boot=yes,device-name=kong-instance,image=projects/cos-cloud/global/images/cos-101-17162-40-20,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
     # Inside the SHH of the instance:
 
@@ -58,6 +58,8 @@ gcloud compute instances create kong-instance --project=rasi-ohare --zone=us-cen
 
 Open http://<ip_externa_kong>:8000
 
+http://35.232.99.110:8000
+
 It should show:
 {"message":"no Route matched with those values"}
 
@@ -65,7 +67,7 @@ It should show:
 
 Insumos / Supply MS:
 
-gcloud compute instances create supply-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=rest-django --create-disk=auto-delete=yes,boot=yes,device-name=app-no-pattern,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+gcloud compute instances create supply-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=rest-django --create-disk=auto-delete=yes,boot=yes,device-name=supply-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
     # Inside the SHH of the instance:
 
@@ -77,7 +79,7 @@ gcloud compute instances create supply-ms --project=rasi-ohare --zone=us-central
 
 >>> git clone https://github.com/KorenJin/OHare.git
 
->>> cd RasiMedicalApp/microservices/supply
+>>> cd OHare/RasiMedicalApp/microservices/supply
 
 >>> pip install --upgrade Django
 
@@ -104,9 +106,9 @@ ctrl+x -> y -> enter
 
     # ~ #
 
-Historia clinica / Medical History MS:
+Formula medica / formula MS:
 
-gcloud compute instances create medicalhistory-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=rest-django --create-disk=auto-delete=yes,boot=yes,device-name=app-no-pattern,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+gcloud compute instances create formula-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=rest-django --create-disk=auto-delete=yes,boot=yes,device-name=formula-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
     # Inside the SHH of the instance:
 
@@ -118,7 +120,7 @@ gcloud compute instances create medicalhistory-ms --project=rasi-ohare --zone=us
 
 >>> git clone https://github.com/KorenJin/OHare.git
 
->>> cd RasiMedicalApp/microservices/medicalhistory
+>>> cd OHare/RasiMedicalApp/microservices/formula
 
 >>> pip install --upgrade Django
 
@@ -128,13 +130,13 @@ gcloud compute instances create medicalhistory-ms --project=rasi-ohare --zone=us
 
 >>> pip install --upgrade requests
 
->>> sudo nano medicalhistory/settings.py
+>>> sudo nano formula/settings.py
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'medicalhistory_db',
-        'USER': 'medicalhistory_user',
+        'NAME': 'formula_db',
+        'USER': 'formula_user',
         'PASSWORD': 'isis2503',
         'HOST': 'internal_ip of the db instance',
         'PORT': '5432'
@@ -152,18 +154,13 @@ ctrl+x -> y -> enter
 cd RasiMedicalApp/microservices
 
 django-admin startproject supply
-django-admin startproject medicalhistory
+django-admin startproject formula
 
 "python manage.py startapp app_name"
 
-cd supply
-python manage.py startapp rasimed
-
-cd ../medicalhistory
-python manage.py startapp rasimed
-
 # (When OHare is the root)
 cd RasiMedicalApp/microservices/supply 
+cd RasiMedicalApp/microservices/formula
 
 python manage.py makemigrations
 python manage.py migrate
@@ -176,3 +173,6 @@ python manage.py migrate <table_name>
 
 python manage.py makemigrations supply
 python manage.py migrate supply
+
+python manage.py makemigrations formula
+python manage.py migrate formula
