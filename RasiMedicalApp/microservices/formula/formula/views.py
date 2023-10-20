@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 import json
 
+
 def home(request):
     return render(request, 'home.html')
 

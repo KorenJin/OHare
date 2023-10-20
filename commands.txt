@@ -79,15 +79,26 @@ gcloud compute instances create supply-ms --project=rasi-ohare --zone=us-central
 
 >>> git clone https://github.com/KorenJin/OHare.git
 
->>> cd OHare/RasiMedicalApp/microservices/supply
-
 >>> pip install --upgrade Django
+(optional) >>> pip3 install --upgrade Django
+
+(In case instalation of psycopg2 fails)
+>>> sudo apt-get install libpq-dev
+>>> sudo apt update
 
 >>> pip install --upgrade psycopg2
+(optional) >>> pip3 install --upgrade psycopg2
+(optional) >>> pip3 install psycopg2
 
 >>> pip install --upgrade psycopg2-binary
+(optional) >>> pip3 install --upgrade psycopg2-binary
+(optional) >>> pip3 install psycopg2-binary
 
 >>> pip install --upgrade requests
+(optional) >>> pip3 install --upgrade requests
+(optional) >>> pip3 install requests
+
+>>> cd OHare/RasiMedicalApp/microservices/supply
 
 >>> sudo nano supply/settings.py
 
@@ -115,20 +126,34 @@ gcloud compute instances create formula-ms --project=rasi-ohare --zone=us-centra
 >>> sudo apt update
 
 >>> sudo apt install python3-pip -y
+(optional) >>> sudo apt install python3-pip
 
 >>> export LC_ALL=C
 
 >>> git clone https://github.com/KorenJin/OHare.git
 
->>> cd OHare/RasiMedicalApp/microservices/formula
-
 >>> pip install --upgrade Django
+(optional) >>> pip3 install --upgrade Django
+(optional) >>> pip3 install Django
+(optional) >>> pip install Django
+
+(In case instalation of psycopg2 fails)
+>>> sudo apt-get install libpq-dev
+>>> sudo apt update
 
 >>> pip install --upgrade psycopg2
+(optional) >>> pip3 install --upgrade psycopg2
+(optional) >>> pip3 install psycopg2
 
 >>> pip install --upgrade psycopg2-binary
+(optional) >>> pip3 install --upgrade psycopg2-binary
+(optional) >>> pip3 install psycopg2-binary
 
 >>> pip install --upgrade requests
+(optional) >>> pip3 install --upgrade requests
+(optional) >>> pip3 install requests
+
+>>> cd OHare/RasiMedicalApp/microservices/formula
 
 >>> sudo nano formula/settings.py
 
@@ -162,10 +187,17 @@ django-admin startproject formula
 cd RasiMedicalApp/microservices/supply 
 cd RasiMedicalApp/microservices/formula
 
+cd OHare/RasiMedicalApp/microservices/supply 
+cd OHare/RasiMedicalApp/microservices/formula
+
 python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver 0.0.0.0:8080 # For remote hosting
 python manage.py runserver # For local hosting
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver 0.0.0.0:8080 # For remote hosting
 
 # When a table is not being created
 python manage.py makemigrations <table_name>
