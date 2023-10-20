@@ -8,9 +8,7 @@ services:
       
       - name: formula
         paths:
-          - /
-          - /formulas
-          - /create_supply_form
+          - /formula
         strip_path: false
 
   - host: supply_upstream
@@ -20,8 +18,7 @@ services:
       
       - name: supply
         paths:
-          - /create_supply_form
-          - /supplies
+          - /supply
         strip_path: false
     
 upstreams:

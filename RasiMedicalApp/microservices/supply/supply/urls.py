@@ -22,9 +22,9 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('create_supply_form/', views.create_supply_form, name='create_supply_form'),
+    path('supply/admin/', admin.site.urls),
+    path('supply/', views.home, name='home'),
+    path('supply/create_supply_form/', views.create_supply_form, name='create_supply_form'),
     re_path(r'^supplies/', views.list_supplies, name='list_supplies'),
     re_path(r'^create_supply/', csrf_exempt(views.create_supply), name='create_supply'),
 ]

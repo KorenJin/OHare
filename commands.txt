@@ -72,7 +72,7 @@ gcloud compute instances create kong --project=rasi-ohare --zone=us-central1-a -
 
 Open http://<ip_externa_kong>:8000
 
-http://34.122.206.117:8000
+http://34.171.79.85:8000
 
 It should show:
 {"message":"no Route matched with those values"}

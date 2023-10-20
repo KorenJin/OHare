@@ -22,9 +22,9 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('create_formula_form/', views.create_formula_form, name='create_formula_form'),
+    path('formula/admin/', admin.site.urls),
+    path('formula/', views.home, name='home'),
+    path('formula/create_formula_form/', views.create_formula_form, name='create_formula_form'),
     re_path(r'^formulas/', views.list_formulas, name='list_formulas'),
     re_path(r'^create_formula/', csrf_exempt(views.create_formula), name='create_formula'),
 ]
