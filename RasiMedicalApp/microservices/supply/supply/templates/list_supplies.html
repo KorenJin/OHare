@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="../supply.css">
+    <title>Listado de Insumos</title>
+<body>
+    <h1>Listado de Insumos</h1>
+    <ul id="list_supplies"> 
+        {% for supply in supplies %}
+            <li>Nombre: {{ supply.name }}</li>
+                <ul>
+                    <li>Descripción: {{ supply.description }}</li>
+                    <li>Precio: ${{ supply.price }}</li>    
+                    <li>Cantidad: {{ supply.quantity }}</li>
+                </ul>
+        {% endfor %}
+    </ul>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/supplies',
+                method: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        var supplyItem = $('<li class="supply-item"></li>');
+                        
+                        var name = $('<p>Name: ' + item.name + '</p>');
+                        var price = $('<p>Price: $' + item.price + '</p>');
+                        var quantity = $('<p>Quantity: ' + item.quantity + '</p>');
+                        
+                        supplyItem.append(name);
+                        supplyItem.append(price);
+                        supplyItem.append(quantity);
+                        
+                        $('#list_supplies').append(supplyItem);
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

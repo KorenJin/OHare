@@ -224,3 +224,8 @@ python manage.py makemigrations formula
 python manage.py migrate formula
 
 docker ps -a
+
+Open http://<ip_externa_kong>:8000
+
+http://34.171.79.85:8000/supply
+http://34.171.79.85:8000/formula

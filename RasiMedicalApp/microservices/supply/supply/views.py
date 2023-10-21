@@ -13,9 +13,9 @@ def create_supply_form(request):
     return render(request, 'create_supply.html')
 
 def list_supplies(request):
-    queryset = Supply.objects.all()
-    context = list(queryset.values('id', 'name', 'description', 'price', 'quantity'))
-    return JsonResponse(context, safe=False)
+    supplies = Supply.objects.all()
+    context = {'supplies': supplies}
+    return render(request, 'list_supplies.html', context)
 
 def create_supply(request):
     if request.method == 'POST':
