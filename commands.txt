@@ -219,13 +219,16 @@ python manage.py migrate <table_name>
 
 python manage.py makemigrations supply
 python manage.py migrate supply
+supply_supply
 
 python manage.py makemigrations formula
 python manage.py migrate formula
 
 docker ps -a
+sudo docker ps -a
+sudo docker ps
 
 Open http://<ip_externa_kong>:8000
 
-http://34.171.79.85:8000/supply
-http://34.171.79.85:8000/formula
+http://35.238.59.178:8000/formula
+http://35.238.59.178:8000/supply

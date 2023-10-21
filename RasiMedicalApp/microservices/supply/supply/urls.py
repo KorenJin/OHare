@@ -25,9 +25,6 @@ urlpatterns = [
     path('supply/admin/', admin.site.urls),
     path('supply/', views.home, name='home'),
     path('supply/create_supply_form/', views.create_supply_form, name='create_supply_form'),
-    re_path(r'^supplies/', views.list_supplies, name='list_supplies'),
+    path('supply/supplies/', views.list_supplies, name='list_supplies'),
     re_path(r'^create_supply/', csrf_exempt(views.create_supply), name='create_supply'),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
