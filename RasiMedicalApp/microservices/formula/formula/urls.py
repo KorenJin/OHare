@@ -26,5 +26,5 @@ urlpatterns = [
     path('formula/', views.home, name='home'),
     path('formula/create_formula_form/', views.create_formula_form, name='create_formula_form'),
     re_path(r'^formulas/', views.list_formulas, name='list_formulas'),
-    path('formula/create_formula/', views.create_formula, name='create_formula'),
+    path('formula/create_formula/', csrf_exempt(views.create_formula), name='create_formula'),
 ]
