@@ -25,9 +25,17 @@ upstreams:
   - name: supply_upstream
     targets:
       - target: 10.128.0.16:8080
-        weight: 100
+        weight: 33
+      - target: 10.128.0.54:8080
+        weight: 33
+      - target: 10.128.0.55:8080
+        weight: 34
 
   - name: formula_upstream
     targets:
       - target: 10.128.0.15:8080
-        weight: 100
+        weight: 33
+      - target: 10.128.0.56:8080
+        weight: 33
+      - target: 10.128.0.57:8080
+        weight: 34

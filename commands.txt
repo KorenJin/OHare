@@ -64,6 +64,18 @@ gcloud compute instances create kong --project=rasi-ohare --zone=us-central1-a -
 
 >>> sudo docker network create kong-net
 
+>>> sudo docker pull kong/kong-gateway:2.7.2.0-alpine
+
+>>> sudo service docker restart
+
+>>> sudo docker pull kong/kong-gateway:2.7.2.0-alpine
+
+>>> echo '{ "dns": ["8.8.8.8"] }' | sudo tee /etc/docker/daemon.json
+
+>>> sudo service docker restart
+
+>>> sudo docker pull kong/kong-gateway:2.7.2.0-alpine
+
 >>> sudo docker run -d --name kong --network=kong-net -v "$(pwd):/kong/declarative/" -e "KONG_DATABASE=off" -e "KONG_DECLARATIVE_CONFIG=/kong/declarative/kong.yml" -e "KONG_PROXY_ACCESS_LOG=/dev/stdout" -e "KONG_ADMIN_ACCESS_LOG=/dev/stdout" -e "KONG_PROXY_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_ERROR_LOG=/dev/stderr" -e "KONG_ADMIN_LISTEN=0.0.0.0:8001" -e "KONG_ADMIN_GUI_URL=http://localhost:8002" -p 8000:8000 -p 8001:8001 -p 8002:8002 kong/kong-gateway:2.7.2.0-alpine
 
 >>> sudo docker ps
@@ -83,9 +95,17 @@ Insumos / Supply MS:
 
 gcloud compute instances create supply-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=supply-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
+gcloud compute instances create supply-ms-a --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=supply-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
+gcloud compute instances create supply-ms-b --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=supply-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
     # Inside the SHH of the instance:
 
 >>> sudo apt update
+
+>>> sudo apt-get update
+
+>>> sudo apt-get install -f
 
 >>> sudo apt install python3-pip -y
 
@@ -122,7 +142,7 @@ DATABASES = {
         'NAME': 'supply_db',
         'USER': 'supply_user',
         'PASSWORD': 'isis2503',
-        'HOST': 'internal_ip of the db instance',
+        'HOST': 'internal_ip of the db instance', # 10.128.0.10
         'PORT': '5432'
     }
 }
@@ -135,9 +155,17 @@ Formula medica / formula MS:
 
 gcloud compute instances create formula-ms --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=formula-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
 
+gcloud compute instances create formula-ms-a --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=formula-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
+gcloud compute instances create formula-ms-b --project=rasi-ohare --zone=us-central1-a --machine-type=e2-micro --network-interface=network-tier=PREMIUM,subnet=default --maintenance-policy=MIGRATE --provisioning-model=STANDARD --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append --tags=services-apps --create-disk=auto-delete=yes,boot=yes,device-name=formula-ms,image=projects/ubuntu-os-cloud/global/images/ubuntu-1804-bionic-v20221018,mode=rw,size=10,type=projects/rasi-ohare/zones/us-central1-a/diskTypes/pd-standard --no-shielded-secure-boot --shielded-vtpm --shielded-integrity-monitoring --reservation-affinity=any
+
     # Inside the SHH of the instance:
 
 >>> sudo apt update
+
+>>> sudo apt-get update
+
+>>> sudo apt-get install -f
 
 >>> sudo apt install python3-pip -y
 (optional) >>> sudo apt install python3-pip
@@ -177,7 +205,7 @@ DATABASES = {
         'NAME': 'formula_db',
         'USER': 'formula_user',
         'PASSWORD': 'isis2503',
-        'HOST': 'internal_ip of the db instance',
+        'HOST': 'internal_ip of the db instance', # 10.128.0.11
         'PORT': '5432'
     }
 }
@@ -201,7 +229,7 @@ django-admin startproject formula
 cd RasiMedicalApp/microservices/supply 
 cd RasiMedicalApp/microservices/formula
 
-cd OHare/RasiMedicalApp/microservices/supply 
+cd OHare/RasiMedicalApp/microservices/supply
 cd OHare/RasiMedicalApp/microservices/formula
 
 python manage.py makemigrations

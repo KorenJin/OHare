@@ -26,5 +26,5 @@ urlpatterns = [
     path('supply/', views.home, name='home'),
     path('supply/create_supply_form/', views.create_supply_form, name='create_supply_form'),
     path('supply/supplies/', views.list_supplies, name='list_supplies'),
-    re_path(r'^create_supply/', csrf_exempt(views.create_supply), name='create_supply'),
+    path('supply/create_supply/', views.create_supply, name='create_supply'),
 ]
